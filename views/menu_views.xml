@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu: Work Management -->
+    <menuitem id="menu_work_root"
+        name="Work Management"
+        sequence="1" />
+
+    <!-- Main Action Menu -->
+    <menuitem id="menu_work_management"
+        name="Works Management"
+        parent="menu_work_root"
+        action="action_work_management"
+        sequence="10"
+    />
+
+    <!-- Settings/Definitions Submenu -->
+    <menuitem id="menu_work_settings"
+        name="Definições"
+        parent="menu_work_root"
+        sequence="90" />
+
+    <!-- Auxiliary Menus under Settings -->
+    <menuitem id="menu_work_property"
+        name="Properties"
+        parent="menu_work_settings"
+        action="action_work_property"
+        sequence="10" />
+
+    <menuitem id="menu_work_stage"
+        name="Stages"
+        parent="menu_work_settings"
+        action="action_work_stage"
+        sequence="20" />
+
+    <menuitem id="menu_work_document"
+        name="Documents"
+        parent="menu_work_settings"
+        action="action_work_document"
+        sequence="30" />
+</odoo>

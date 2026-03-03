@@ -1,0 +1,22 @@
+<odoo>
+    <record id="stage_awaiting_analysis" model="work.stage">
+        <field name="name">Aguardando análise</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="stage_in_analysis" model="work.stage">
+        <field name="name">Em análise</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="stage_awaiting_client" model="work.stage">
+        <field name="name">Aguardando Cliente</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="stage_approved" model="work.stage">
+        <field name="name">Aprovado</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="stage_rejected" model="work.stage">
+        <field name="name">Reprovado</field>
+        <field name="sequence">50</field>
+    </record>
+</odoo>

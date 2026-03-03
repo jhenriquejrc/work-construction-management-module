@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Work Property Action -->
+    <record id="action_work_property" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">work.property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Work Stage Action -->
+    <record id="action_work_stage" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">work.stage</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Work Document Action -->
+    <record id="action_work_document" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">work.document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
