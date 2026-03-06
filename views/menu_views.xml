@@ -2,12 +2,12 @@
 <odoo>
     <!-- Root Menu: Work Management -->
     <menuitem id="menu_work_root"
-        name="Work Management"
+        name="Obras Pro"
         sequence="1" />
 
     <!-- Main Action Menu -->
     <menuitem id="menu_work_management"
-        name="Works Management"
+        name="Dashboard"
         parent="menu_work_root"
         action="action_work_management"
         sequence="10"
@@ -21,19 +21,19 @@
 
     <!-- Auxiliary Menus under Settings -->
     <menuitem id="menu_work_property"
-        name="Properties"
+        name="Propriedades"
         parent="menu_work_settings"
         action="action_work_property"
         sequence="10" />
 
     <menuitem id="menu_work_stage"
-        name="Stages"
+        name="Etapas"
         parent="menu_work_settings"
         action="action_work_stage"
         sequence="20" />
 
     <menuitem id="menu_work_document"
-        name="Documents"
+        name="Documentos"
         parent="menu_work_settings"
         action="action_work_document"
         sequence="30" />

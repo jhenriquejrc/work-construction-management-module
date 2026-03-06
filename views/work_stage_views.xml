@@ -8,6 +8,7 @@
             <list>
                 <field name="sequence"/>
                 <field name="name"/>
+                <field name="fold"/>
                 <field name="active"/>
             </list>
         </field>
@@ -23,6 +24,7 @@
                     <group>
                         <field name="name"/>
                         <field name="sequence"/>
+                        <field name="fold"/>
                         <field name="active"/>
                     </group>
                     <group>

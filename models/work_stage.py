@@ -11,3 +11,4 @@ class WorkStage(models.Model):
     description = fields.Text(string='Description')
     sequence = fields.Integer(string='Sequence', default=10)
     active = fields.Boolean(string='Active', default=True)
+    fold = fields.Boolean(string='Folded in Kanban', default=False)

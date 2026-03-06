@@ -6,6 +6,7 @@
         <field name="model">work.document</field>
         <field name="arch" type="xml">
             <list>
+                <field name="document_type_id"/>
                 <field name="title"/>
                 <field name="description"/>
                 <field name="create_date"/>
@@ -21,9 +22,10 @@
             <form>
                 <sheet>
                     <group>
+                        <field name="document_type_id"/>
                         <field name="title"/>
                         <field name="description"/>
-                        <field name="display_name"/>
+                        <field name="attachment_id"/>
                     </group>
                     <group>
                         <field name="description"/>
@@ -35,12 +37,12 @@
 
     <!-- Window Action -->
     <record id="action_work_document" model="ir.actions.act_window">
-        <field name="name">Work Documents</field>
+        <field name="name">Documentos de Obra</field>
         <field name="res_model">work.document</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your first work document
+                Crie seu primeiro documento de obra
             </p>
         </field>
     </record>

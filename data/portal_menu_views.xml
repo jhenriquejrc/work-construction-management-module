@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal Menus -->
+    <menuitem id="menu_portal_my_units" 
+        name="Minhas Unidades" 
+        parent="portal.portal_my_home"
+        url="/my/units"
+        sequence="10"
+        groups="base.group_portal"/>
+
+    <menuitem id="menu_portal_my_works" 
+        name="Minhas Obras" 
+        parent="portal.portal_my_home"
+        url="/my/works"
+        sequence="20"
+        groups="base.group_portal"/>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_account_extra"
+        inherit_id="portal.portal_my_home"
+        name="Portal My Account Extra Item">
+        <xpath expr="//div[@id='portal_common_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-connection.svg'"/>
+                <t t-set="title">Minhas Unidades</t>
+                <t t-set="text">Gerencie unidades e lotes</t>
+                <t t-set="url" t-value="'/my/units'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/portal/static/src/img/portal-addresses.svg'"/>
+                <t t-set="title">Minhas Obras</t>
+                <t t-set="text">Acompanhe o andamento das obras</t>
+                <t t-set="url" t-value="'/my/works'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

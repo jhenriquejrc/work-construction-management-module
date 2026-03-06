@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Security records and rules go here -->
+    <record id="rule_work_property_portal" model="ir.rule">
+        <field name="name">Portal - Own Properties</field>
+        <field name="model_id" ref="work_construction_management.model_work_property"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="domain_force">[("user_id", "=", user.id)]</field>
+    </record>
+
+    <record id="rule_work_management_portal" model="ir.rule">
+        <field name="name">Portal - Own Works</field>
+        <field name="model_id" ref="work_construction_management.model_work_management"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="domain_force">[("property_id.user_id", "=", user.id)]</field>
+    </record>
+
+    <record id="rule_work_document_portal" model="ir.rule">
+        <field name="name">Portal - Own Work Documents</field>
+        <field name="model_id" ref="work_construction_management.model_work_document"/>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+        <field name="domain_force">[("work_id.property_id.user_id", "=", user.id)]</field>
+    </record>
 </odoo>

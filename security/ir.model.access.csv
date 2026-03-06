@@ -1,4 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_work_management_user,work.management.user,model_work_management,base.group_user,1,1,1,1
 access_work_property_user,work.property.user,model_work_property,base.group_user,1,1,1,1
 access_work_stage_user,work.stage.user,model_work_stage,base.group_user,1,1,1,1
 access_work_document_user,work.document.user,model_work_document,base.group_user,1,1,1,1
+access_work_type_user,work.type.user,model_work_type,base.group_user,1,1,1,1
+access_work_document_type_user,work.document.type.user,model_work_document_type,base.group_user,1,1,1,1
+access_work_management_portal,work.management.portal,model_work_management,base.group_portal,1,1,1,0
+access_work_property_portal,work.property.portal,model_work_property,base.group_portal,1,1,1,0
+access_work_document_portal,work.document.portal,model_work_document,base.group_portal,1,1,1,0
+access_work_stage_portal,work.stage.portal,model_work_stage,base.group_portal,1,0,0,0
+access_work_type_portal,work.type.portal,model_work_type,base.group_portal,1,0,0,0
+access_work_document_type_portal,work.document.type.portal,model_work_document_type,base.group_portal,1,0,0,0

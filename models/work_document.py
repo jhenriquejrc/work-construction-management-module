@@ -5,9 +5,10 @@ class WorkDocument(models.Model):
     _name = 'work.document'
     _description = 'Work Document'
     _rec_name = 'title'
-    _order = 'date desc, title'
+    _order = 'upload_date desc, title'
 
     work_id = fields.Many2one('work.management', string='Work', required=True)
+    document_type_id = fields.Many2one('work.document.type', string='Document Type')
     title = fields.Char(string='Document Name', required=True)
     description = fields.Text(string='Description')
     attachment_id = fields.Many2one('ir.attachment', string='Attachment')

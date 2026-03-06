@@ -26,6 +26,18 @@
         action="action_work_property"
         sequence="10" />
 
+    <menuitem id="menu_work_type"
+        name="Work Types"
+        parent="menu_work_settings"
+        action="action_work_type"
+        sequence="15" />
+
+    <menuitem id="menu_work_document_type"
+        name="Document Types"
+        parent="menu_work_settings"
+        action="action_work_document_type"
+        sequence="16" />
+
     <menuitem id="menu_work_stage"
         name="Stages"
         parent="menu_work_settings"

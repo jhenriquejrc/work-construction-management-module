@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_work_document_type_list" model="ir.ui.view">
+        <field name="name">work.document.type.list</field>
+        <field name="model">work.document.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="required"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_work_document_type_form" model="ir.ui.view">
+        <field name="name">work.document.type.form</field>
+        <field name="model">work.document.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <h1>
+                        <field name="name" placeholder="Nome do Documento"/>
+                    </h1>
+                    <group>
+                        <field name="active"/>
+                        <field name="required"/>
+                        <field name="description" placeholder="Descrição do documento"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+    <record id="action_work_document_type" model="ir.actions.act_window">
+        <field name="name">Tipos de Documento</field>
+        <field name="res_model">work.document.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crie seu primeiro tipo de documento
+            </p>
+        </field>
+    </record>
+</odoo>

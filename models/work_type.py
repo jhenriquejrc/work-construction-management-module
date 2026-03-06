@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class WorkType(models.Model):
     _name = 'work.type'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Work Type'
     _rec_name = 'name'
     _order = 'name'

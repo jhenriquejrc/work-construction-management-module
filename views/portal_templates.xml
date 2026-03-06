@@ -1,5 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Portal templates placeholder -->
-    <!-- Add portal-specific templates here as needed -->
+    <template id="portal_my_units" name="Portal My Units">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs" t-value="[('Minhas Unidades', '/my/units')]"/>
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">Minhas Unidades</h2>
+                    <a class="btn btn-outline-primary" href="/my/works">Ver Obras</a>
+                </div>
+
+                <t t-if="error">
+                    <div class="alert alert-danger" role="alert">
+                        <t t-esc="error"/>
+                    </div>
+                </t>
+
+                <div class="card mb-4">
+                    <div class="card-header">Nova Unidade</div>
+                    <div class="card-body">
+                        <form method="post" action="/my/units/create">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nome</label>
+                                    <input type="text" name="name" class="form-control" required="required"/>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Lote</label>
+                                    <input type="text" name="lot_number" class="form-control"/>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label class="form-label">Endereco</label>
+                                    <input type="text" name="address" class="form-control"/>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Descricao</label>
+                                    <textarea name="description" class="form-control" rows="2"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Criar Unidade</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Unidades</div>
+                    <div class="card-body">
+                        <t t-if="properties">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Lote</th>
+                                            <th>Endereco</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="properties" t-as="prop">
+                                            <tr>
+                                                <td><t t-esc="prop.name"/></td>
+                                                <td><t t-esc="prop.lot_number"/></td>
+                                                <td><t t-esc="prop.address"/></td>
+                                                <td class="text-end">
+                                                    <a class="btn btn-sm btn-outline-primary" t-att-href="'/my/units/%s/works/new' % prop.id">Nova Obra</a>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <p class="text-muted mb-0">Nenhuma unidade cadastrada.</p>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_new_work" name="Portal New Work">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs" t-value="[('Minhas Unidades', '/my/units'), (property.name, '/my/units'), ('Nova Obra', '')]"/>
+            <div class="container mt-4">
+                <h2 class="mb-3">Nova Obra</h2>
+
+                <div class="card mb-4">
+                    <div class="card-header">1. Selecione o Tipo de Demanda</div>
+                    <div class="card-body">
+                        <form method="get" t-att-action="'/my/units/%s/works/new' % property.id">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tipo</label>
+                                    <select class="form-select" name="work_type_id" onchange="this.form.submit()">
+                                        <option value="">Selecione</option>
+                                        <t t-foreach="work_types" t-as="work_type">
+                                            <option t-att-value="work_type.id" t-att-selected="selected_type and work_type.id == selected_type.id">
+                                                <t t-esc="work_type.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <t t-if="selected_type">
+                            <div class="mt-3">
+                                <h6 class="text-muted">Documentos obrigatorios</h6>
+                                <ul class="mb-0">
+                                    <t t-foreach="doc_templates" t-as="doc_template">
+                                        <li>
+                                            <strong><t t-esc="doc_template.name"/></strong>
+                                            <t t-if="doc_template.description"> - <t t-esc="doc_template.description"/></t>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">2. Criar Obra</div>
+                    <div class="card-body">
+                        <form method="post" t-att-action="'/my/units/%s/works/create' % property.id">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="work_type_id" t-att-value="selected_type and selected_type.id or ''"/>
+                            <button type="submit" class="btn btn-primary" t-att-disabled="not selected_type">Criar Obra</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_work_documents" name="Portal Work Documents">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs" t-value="[('Minhas Obras', '/my/works'), (work.name, '/my/works/%s' % work.id), ('Documentos', '')]"/>
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">Documentos da Obra</h2>
+                    <a class="btn btn-outline-secondary" t-att-href="'/my/works/%s' % work.id">Voltar</a>
+                </div>
+
+                <t t-if="error">
+                    <div class="alert alert-danger" role="alert">
+                        <t t-esc="error"/>
+                    </div>
+                </t>
+
+                <form method="post" t-att-action="'/my/works/%s/documents/save' % work.id" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="card">
+                        <div class="card-header">Arquivos requeridos</div>
+                        <div class="card-body">
+                            <t t-if="work.document_ids">
+                                <t t-foreach="work.document_ids" t-as="doc">
+                                    <div class="border rounded p-3 mb-3">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong><t t-esc="doc.title"/></strong>
+                                                <t t-if="doc.description">
+                                                    <div class="text-muted"><t t-esc="doc.description"/></div>
+                                                </t>
+                                            </div>
+                                            <span class="badge bg-light text-dark"><t t-esc="doc.review_status"/></span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <input type="file" class="form-control" t-att-name="'doc_%s' % doc.id"/>
+                                            <t t-if="doc.sudo().attachment_id">
+                                                <small class="text-muted">Arquivo enviado: <t t-esc="doc.sudo().attachment_id.name"/></small>
+                                            </t>
+                                        </div>
+                                        <t t-if="doc.review_comment">
+                                            <div class="alert alert-warning mt-2 mb-0">
+                                                <strong>Observacao:</strong> <t t-esc="doc.review_comment"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <p class="text-muted mb-0">Nenhum documento configurado para esta obra.</p>
+                            </t>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-outline-primary">Salvar</button>
+                        <button type="submit" name="submit_action" value="1" class="btn btn-primary">Submeter para Analise</button>
+                    </div>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_work_list" name="Portal Work List">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs" t-value="[('Minhas Obras', '/my/works')]"/>
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">Minhas Obras</h2>
+                    <a class="btn btn-outline-primary" href="/my/units">Minhas Unidades</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <t t-if="works">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Numero</th>
+                                            <th>Unidade</th>
+                                            <th>Tipo</th>
+                                            <th>Estagio</th>
+                                            <th>Status</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="works" t-as="work">
+                                            <tr>
+                                                <td><a t-att-href="'/my/works/%s' % work.id"><t t-esc="work.name"/></a></td>
+                                                <td><t t-esc="work.property_id.name"/></td>
+                                                <td><t t-esc="work.work_type_id.name"/></td>
+                                                <td><t t-esc="work.stage_id.name"/></td>
+                                                <td><t t-esc="work.state"/></td>
+                                                <td class="text-end">
+                                                    <a class="btn btn-sm btn-outline-secondary" t-att-href="'/my/works/%s' % work.id">Ver</a>
+                                                    <t t-if="work.state in ('draft', 'submitted')">
+                                                        <a class="btn btn-sm btn-outline-primary" t-att-href="'/my/works/%s/documents' % work.id">Documentos</a>
+                                                    </t>
+                                                    <t t-if="work.state == 'in_progress'">
+                                                        <a class="btn btn-sm btn-outline-primary" t-att-href="'/my/works/%s/documents' % work.id">Acompanhar</a>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <p class="text-muted mb-0">Nenhuma obra cadastrada.</p>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="portal_work_detail" name="Portal Work Detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs" t-value="[('Minhas Obras', '/my/works'), (work.name, '')]"/>
+            <div class="container mt-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">Obra <t t-esc="work.name"/></h2>
+                    <a class="btn btn-outline-secondary" href="/my/works">Voltar</a>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="mb-1"><strong>Unidade:</strong> <t t-esc="work.property_id.name"/></p>
+                                <p class="mb-1"><strong>Tipo:</strong> <t t-esc="work.work_type_id.name"/></p>
+                                <p class="mb-1"><strong>Estagio:</strong> <t t-esc="work.stage_id.name"/></p>
+                                <p class="mb-0"><strong>Status:</strong> <t t-esc="work.state"/></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <div class="card">
+                            <div class="card-header">Acoes</div>
+                            <div class="card-body">
+                                <a class="btn btn-primary" t-att-href="'/my/works/%s/documents' % work.id">Atualizar Documentos</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Documentos</div>
+                    <div class="card-body">
+                        <t t-if="work.document_ids">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Status</th>
+                                            <th>Observacao</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="work.document_ids" t-as="doc">
+                                            <tr>
+                                                <td><t t-esc="doc.title"/></td>
+                                                <td><t t-esc="doc.review_status"/></td>
+                                                <td><t t-esc="doc.review_comment"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <p class="text-muted mb-0">Nenhum documento enviado.</p>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
 </odoo>

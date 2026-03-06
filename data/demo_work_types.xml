@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Work Types -->
+    <record id="work_type_construction" model="work.type">
+        <field name="name">Construção</field>
+        <field name="description">Solicitação para obras de construção nova</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="work_type_reform" model="work.type">
+        <field name="name">Reforma</field>
+        <field name="description">Solicitação para reforma ou melhorias</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Demo Document Types for Construction -->
+    <record id="doc_type_architectural_design" model="work.document.type">
+        <field name="name">Projeto Arquitetônico</field>
+        <field name="description">Planta e projeto arquitetônico da obra</field>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="doc_type_construction_permit" model="work.document.type">
+        <field name="name">Alvará de Construção</field>
+        <field name="description">Alvará expedido pela prefeitura</field>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="doc_type_art" model="work.document.type">
+        <field name="name">ART/CREA</field>
+        <field name="description">Anotação de Responsabilidade Técnica ou registro CREA</field>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="doc_type_budget" model="work.document.type">
+        <field name="name">Orçamento</field>
+        <field name="description">Orçamento detalhado da obra</field>
+        <field name="required">False</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Link Documents to Construction Type -->
+    <record id="work_type_construction" model="work.type">
+        <field name="work_document_type_ids" eval="[(6, 0, [ref('doc_type_architectural_design'), ref('doc_type_construction_permit'), ref('doc_type_art'), ref('doc_type_budget')])]"/>
+    </record>
+
+    <!-- Demo Document Types for Reform -->
+    <record id="doc_type_reform_budget" model="work.document.type">
+        <field name="name">Orçamento da Reforma</field>
+        <field name="description">Orçamento para a reforma</field>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="doc_type_before_after" model="work.document.type">
+        <field name="name">Fotos Antes/Depois</field>
+        <field name="description">Fotos do estado anterior da unidade</field>
+        <field name="required">False</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Link Documents to Reform Type -->
+    <record id="work_type_reform" model="work.type">
+        <field name="work_document_type_ids" eval="[(6, 0, [ref('doc_type_reform_budget'), ref('doc_type_before_after')])]"/>
+    </record>
+</odoo>

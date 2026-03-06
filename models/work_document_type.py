@@ -3,6 +3,7 @@ from odoo import models, fields
 
 class WorkDocumentType(models.Model):
     _name = 'work.document.type'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Work Document Type'
     _rec_name = 'name'
     _order = 'date desc, name'
@@ -11,3 +12,4 @@ class WorkDocumentType(models.Model):
     description = fields.Text(string='Description')
     date = fields.Date(string='Document Date', default=fields.Date.today)
     active = fields.Boolean(string='Active', default=True)
+    required = fields.Boolean(string='Required', default=True)

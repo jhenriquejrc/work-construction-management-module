@@ -4,14 +4,31 @@
     <field name="name">work.management.kanban</field>
     <field name="model">work.management</field>
     <field name="arch" type="xml">
-      <kanban>
+      <kanban default_group_by="stage_id">
+        <field name="stage_id"/>
+        <field name="state"/>
+        <field name="property_id"/>
+        <field name="work_type_id"/>
+        <field name="analyst_id"/>
         <templates>
           <t t-name="kanban-box">
             <div class="o_kanban_record">
-              <field name="name"/>
+              <strong class="o_kanban_record_title"><field name="name"/></strong>
               <div><field name="property_id"/></div>
               <div><field name="work_type_id"/></div>
-              <div><field name="state"/></div>
+              <div><field name="analyst_id"/></div>
+              <div class="o_kanban_record_bottom">
+                <div class="o_kanban_button_group">
+                  <button type="object" name="action_mark_in_progress" string="Em analise"
+                      class="btn-primary" invisible="state not in ('draft', 'submitted')"/>
+                  <button type="object" name="action_wait_client" string="Aguardando cliente"
+                      class="btn-secondary" invisible="state != 'in_progress'"/>
+                  <button type="object" name="action_approve" string="Aprovar"
+                      class="btn-success" invisible="state in ('approved', 'rejected')"/>
+                  <button type="object" name="action_reject" string="Reprovar"
+                      class="btn-danger" invisible="state in ('approved', 'rejected')"/>
+                </div>
+              </div>
             </div>
           </t>
         </templates>
@@ -19,13 +36,85 @@
     </field>
   </record>
 
+  <record id="view_work_management_list" model="ir.ui.view">
+    <field name="name">work.management.list</field>
+    <field name="model">work.management</field>
+    <field name="arch" type="xml">
+      <list>
+        <field name="name"/>
+        <field name="property_id"/>
+        <field name="work_type_id"/>
+        <field name="stage_id"/>
+        <field name="state"/>
+        <field name="analyst_id"/>
+        <field name="date_submitted"/>
+      </list>
+    </field>
+  </record>
+
+  <record id="view_work_management_form" model="ir.ui.view">
+    <field name="name">work.management.form</field>
+    <field name="model">work.management</field>
+    <field name="arch" type="xml">
+      <form>
+        <header>
+          <button type="object" name="action_submit" string="Submeter"
+              class="btn-primary" invisible="state != 'draft'"/>
+          <button type="object" name="action_mark_in_progress" string="Em análise"
+              class="btn-secondary" invisible="state not in ('draft', 'submitted')"/>
+          <button type="object" name="action_wait_client" string="Aguardando cliente"
+              class="btn-secondary" invisible="state != 'in_progress'"/>
+          <button type="object" name="action_approve" string="Aprovar"
+              class="btn-success" invisible="state in ('approved', 'rejected')"/>
+          <button type="object" name="action_reject" string="Reprovar"
+              class="btn-danger" invisible="state in ('approved', 'rejected')"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,submitted,in_progress,approved,rejected"/>
+        </header>
+        <sheet>
+          <div class="oe_title">
+            <h1><field name="name" readonly="1"/></h1>
+          </div>
+          <group>
+            <group>
+              <field name="property_id"/>
+              <field name="work_type_id"/>
+            </group>
+            <group>
+              <field name="stage_id"/>
+              <field name="analyst_id"/>
+            </group>
+          </group>
+          <group>
+            <group>
+              <field name="date_submitted" readonly="1"/>
+            </group>
+          </group>
+          <notebook>
+            <page string="Documentos">
+              <field name="document_ids" nolabel="1">
+                <list editable="bottom">
+                  <field name="document_type_id"/>
+                  <field name="title"/>
+                  <field name="description"/>
+                  <field name="attachment_id"/>
+                  <field name="review_status"/>
+                  <field name="review_comment"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
    <record id="action_work_management" model="ir.actions.act_window">
-        <field name="name">Work Management</field>
+        <field name="name">Obras Pro</field>
         <field name="res_model">work.management</field>
-        <field name="view_mode">kanban,list</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your first work management record
+                Crie seu primeiro registro de gestão de obras
             </p>
         </field>
     </record>

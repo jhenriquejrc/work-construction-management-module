@@ -39,12 +39,12 @@
 
     <!-- Window Action -->
     <record id="action_work_property" model="ir.actions.act_window">
-        <field name="name">Work Properties</field>
+        <field name="name">Propriedades de Obra</field>
         <field name="res_model">work.property</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                Create your first work property
+                Crie sua primeira propriedade de obra
             </p>
         </field>
     </record>
